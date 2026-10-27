@@ -55,7 +55,7 @@ def row_to_dict(row):
 
 # ---------------------------------------------------------------- usuários
 
-def create_user(email, password, full_name, role="staf"):
+def create_user(email, password, full_name, role="staff"):
     db = get_db()
     cur = db.execute(
         "INSERT INTO users (email, password_hash, role, full_name) VALUES (?, ?, ?, ?)",
