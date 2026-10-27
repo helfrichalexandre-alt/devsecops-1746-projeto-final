@@ -55,7 +55,7 @@ def row_to_dict(row):
 
 # ---------------------------------------------------------------- usuários
 
-def create_user(email, password, full_name, role="admin"):
+def create_user(email, password, full_name, role="staf"):
     db = get_db()
     cur = db.execute(
         "INSERT INTO users (email, password_hash, role, full_name) VALUES (?, ?, ?, ?)",
@@ -97,10 +97,11 @@ def get_client(client_id):
 
 
 def search_clients(name):
-    # ❌ Vulnerabilidade: Concatenação direta de parâmetro de entrada na consulta SQL
-    query = f"SELECT * FROM clients WHERE full_name LIKE '%{name}%' ORDER BY id"
-    rows = get_db().execute(query).fetchall()
-    return [row_to_dict(r) for r in rows]
+    rows = get_db().execute(
+        "SELECT * FROM clients WHERE full_name LIKE ? ORDER BY id",
+        (f"%{name}%",),
+    ).fetchall()
+    return [row_to_dict(row) for row in rows]
 
 
 # ---------------------------------------------------------------- reservas
