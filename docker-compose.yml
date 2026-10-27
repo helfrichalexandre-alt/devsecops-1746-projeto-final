@@ -4,13 +4,10 @@ services:
   aurora-api:
     build: .
     container_name: aurora-api
-    privileged: true  # ❌ Inseguro: concede capacidades totais do host ao container
+
     ports:
       - "8080:8080"
-      - "5000:5000"   # ❌ Inseguro: porta desnecessária exposta
     environment:
-      - SECRET_KEY=aurora-super-secret-key-production-hardcoded-2026 # ❌ Segredo inline
       - FLASK_ENV=development
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock # ❌ Inseguro: socket Docker compartilhado
     restart: always
